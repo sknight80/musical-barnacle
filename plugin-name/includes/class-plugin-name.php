@@ -94,6 +94,7 @@ class Plugin_Name {
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
 		$this->define_wp_cli_commands();
+		$this->define_rest_hooks();
 
 	}
 
@@ -224,6 +225,20 @@ class Plugin_Name {
 
 		// Shortcode name must be the same as in shortcode_atts() third parameter.
 		$this->loader->add_shortcode( $this->get_plugin_prefix() . 'shortcode', $plugin_public, 'pfx_shortcode_func' );
+
+	}
+
+	/**
+	 * Register all of the hooks related to the REST functionality
+	 * of the plugin.
+	 *
+	 * @since    1.0.0
+	 * @access   private
+	 */
+	private function define_rest_hooks() {
+
+		$plugin_rest = new Plugin_Name_Rest( $this->get_plugin_name(), $this->get_plugin_prefix(), $this->get_version());
+		$this->loader->add_action( 'rest_api_init', $plugin_rest, 'register_routes');
 
 	}
 

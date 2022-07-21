@@ -8,7 +8,6 @@
  * @package    Plugin_Name
  * @subpackage Plugin_Name/rest
  */
-*/
 
 /**
  * The public-facing functionality of the plugin.
