@@ -19,7 +19,7 @@ The generator form will soon be online on a standalone website as well.
 * The plugin is scanned by SonarCloud (see SonarCloud badges on top of readme)
 * All classes, functions, and variables are documented so that you know what you need to change.
 * The Boilerplate uses a strict file organization scheme that corresponds both to the WordPress Plugin Repository structure, and that makes it easy to organize the files that compose the plugin.
-* The project includes a `.pot` file as a starting point for internationalization.
+* The project includes [a `.pot` file](https://github.com/fxbenard/Blank-WordPress-Pot) as a starting point for internationalization.
 
 ## How to Create a Plugin
 

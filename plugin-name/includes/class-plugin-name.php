@@ -93,6 +93,7 @@ class Plugin_Name {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
+		$this->define_wp_cli_commands();
 
 	}
 
@@ -105,6 +106,7 @@ class Plugin_Name {
 	 * - Plugin_Name_i18n. Defines internationalization functionality.
 	 * - Plugin_Name_Admin. Defines all hooks for the admin area.
 	 * - Plugin_Name_Public. Defines all hooks for the public side of the site.
+	 * - Plugin_Name_Cron. Orchestrates scheduling and un-scheduling cron jobs.
 	 *
 	 * Create an instance of the loader which will be used to register the hooks
 	 * with WordPress.
@@ -137,8 +139,21 @@ class Plugin_Name {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-plugin-name-public.php';
 
-		$this->loader = new Plugin_Name_Loader();
+		/**
+		 * The class responsible for defining all actions that occur in the rest api
+		 * of the site.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'rest/class-plugin-name-rest.php';
 
+		/**
+		 * Get loader using its singleton
+		 */ 
+		$this->loader = Plugin_Name_Loader::get_instance();
+
+		/**
+		 * The class responsible for scheduling and un-scheduling events (cron jobs).
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-plugin-name-cron.php';
 	}
 
 	/**
@@ -152,7 +167,7 @@ class Plugin_Name {
 	 */
 	private function set_locale() {
 
-		$plugin_i18n = new Plugin_Name_I18n();
+		$plugin_i18n = new Plugin_Name_i18n($this->plugin_name);
 
 		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
 
@@ -172,6 +187,25 @@ class Plugin_Name {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		$this->loader->add_action( Plugin_Name_Cron::PLUGIN_NAME_EVENT_DAILY_HOOK, $plugin_admin, 'run_daily_event' );
+	}
+	
+	/**
+	 * Register the WP CLI commands.
+	 *
+	 * @since 1.0.0
+	 * @access private
+	 */
+	private function define_wp_cli_commands() {
+		if ( ! class_exists( 'WP_CLI' ) ) {
+			return;
+		}
+
+		/**
+		 * The class responsible for executing any WP CLI commands.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-plugin-name-admin-cli.php';
+		WP_CLI::add_command( 'plugin-name', 'Plugin_Name_Admin_CLI' );
 	}
 
 	/**

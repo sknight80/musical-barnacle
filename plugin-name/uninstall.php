@@ -56,6 +56,8 @@ function pfx_uninstall() {
 	 * @see https://developer.wordpress.org/plugins/plugin-basics/uninstall-methods/#method-2-uninstall-php
 	 */
 
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name-cron.php';
+	Plugin_Name_Cron::unschedule();
 }
 
 pfx_uninstall();

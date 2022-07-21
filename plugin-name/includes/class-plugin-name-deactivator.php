@@ -70,6 +70,8 @@ class Plugin_Name_Deactivator {
 		 * Perform your deactivation actions here.
 		 */
 
+		require_once plugin_dir_path( __FILE__ ) . 'class-plugin-name-cron.php';
+		Plugin_Name_Cron::unschedule();
 	}
 
 	/**

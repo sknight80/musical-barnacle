@@ -2,19 +2,12 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link       https://example.com
- * @since      1.0.0
- *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/admin
- */
-
-/**
- * The admin-specific functionality of the plugin.
- *
  * Defines the plugin name, version, and two hooks to
  * enqueue the admin-facing stylesheet and JavaScript.
  * As you add hooks and methods, update this description.
+ *
+ * @link       https://example.com
+ * @since      1.0.0
  *
  * @package    Plugin_Name
  * @subpackage Plugin_Name/admin
@@ -89,4 +82,23 @@ class Plugin_Name_Admin {
 
 	}
 
+	/**
+	 * Example daily event.
+	 */
+	public function run_daily_event() {
+
+		/**
+		 * This function is provided for demonstration purposes only.
+		 *
+		 * An instance of this class should be passed to the run() function
+		 * defined in Plugin_Name_Loader as all of the hooks are defined
+		 * in that particular class.
+		 *
+		 * The Plugin_Name_Loader will then create the relationship
+		 * between the defined hooks and the functions defined in this
+		 * class.
+		 */
+
+		// do something every day
+	}
 }

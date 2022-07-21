@@ -70,6 +70,9 @@ class Plugin_Name_Activator {
 		 * Perform your activation actions here.
 		 */
 
+		// schedule events (cron jobs)
+		require_once plugin_dir_path( __FILE__ ) . 'class-plugin-name-cron.php';
+		Plugin_Name_Cron::schedule();
 	}
 
 	/**
